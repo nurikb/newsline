@@ -4,20 +4,12 @@
     <title>Simple login form</title>
     <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700" rel="stylesheet">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
-
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
 <style>
 * {
   box-sizing: border-box;
-}
-
-#myInput {
-  background-position: 10px 10px;
-  background-repeat: no-repeat;
-  width: 100%;
-  font-size: 16px;
-  padding: 12px 20px 12px 40px;
-  border: 1px solid #ddd;
-  margin-bottom: 12px;
 }
 
 #myTable {
@@ -36,22 +28,29 @@
   border-bottom: 1px solid #ddd;
 }
 
-#myTable tr.header, #myTable tr:hover {
-  background-color: #f1f1f1;
-}
 </style>
   </head>
   <body>
-    {% if news %}
-    {% for pull in news %}
+  <div class="dropdown">
+    <button class="btn btn-primary dropdown-toggle" type="button" data-toggle="dropdown">количество записей</button>
+    <ul class="dropdown-menu">
+      <li><a href="{% url 'news_list' %}?count=10">10</a></li>
+      <li><a href="{% url 'news_list' %}?count=20">20</a></li>
+      <li><a href="{% url 'news_list' %}?count=50">50</a></li>
+    </ul>
+  </div>
+    <table id="myTable">
+      {% for item in news %}
       <tr>
-        <td>{{ pull.title }}</td>
-        <td>{{ pull.date }}</td>
-        <td>{{ pull.text }}</td>
-        <td><img src="{{ pull.image.url }}"></td>
+        <td>{{ item.title }}</td>
+        <td>{{ item.date }}</td>
+        <td>{{ item.text }}</td>
+        {% if item.image %}
+        <td><img src="{{ item.image.url }}"></td>
+        {% endif %}
+
       </tr>
-    {% endfor %}
+      {% endfor %}
     </table>
-    {% endif %}
   </body>
 </html>
